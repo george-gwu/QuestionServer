@@ -13,7 +13,7 @@ class Application_Model_Server {
      * @param  int $role    Role Code (1-User/0-Admin)
      * @return int $userID  A user ID is returned on successful registration
      */
-    public function userRegister($user, $password, $role) {
+    public function userRegister($user, $password, $role=1) {
         
         return array('userID' => 55);
     }
