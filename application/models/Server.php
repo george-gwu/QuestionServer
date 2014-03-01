@@ -46,10 +46,10 @@ class Application_Model_Server {
     public function questionStart($sessionID, $examID) {
         
         return array(
-                    array(  'question'=>"2 + 2 =",
+                    0 => array(  'question'=>"2 + 2 =",
                             'answers'=> array(0=>"0",1=>"3",2=>"4",3=>"8")                                
                         ),
-                    array(  'question'=>"The sky is blue.",
+                    1 => array(  'question'=>"The sky is blue.",
                             'answers'=> array(0=>"False",1=>"True")                                
                         ),            
             );
