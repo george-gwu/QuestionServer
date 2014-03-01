@@ -15,7 +15,26 @@ class Application_Model_Server {
      */
     public function userRegister($user, $password, $role=1) {
         
-        return array('userID' => 55);
+        $validator = new Zend_Validate_Alnum();
+        if(!$validator->isValid($user)){
+            throw new Exception("Invalid Username: Must be Alphanumeric");
+        }
+               
+        if(!$validator->isValid($password)){
+            throw new Exception("Invalid Password: Must be Alphanumeric");
+        }  
+        
+        if($role!=1 && $role !=0){ $role=1; }
+        
+        $userDb = new Application_Model_User();  
+        
+        if($userDb->userExists($user)){
+            throw new Exception("User Exists");
+        }
+        
+        $userID = $userDb->createUser($user, $password, $role);
+        
+        return array('userID' => $userID);
     }
 
     
@@ -30,7 +49,18 @@ class Application_Model_Server {
      */
     public function userLogin($user, $password) {
         
-        return array('sessionID' => "abcde12345", 'role' => 1);
+        $userDb = new Application_Model_User();
+        $valid = $userDb->isUserPasswordValid($user, $password);
+        
+        if($valid){             
+            $sessionID = $userDb->createSession($user);            
+            $userData = $userDb->getUserDataFromSessionID($sessionID);
+            
+            return array('sessionID' => $sessionID, 'role' => $userData['role']);
+            
+        } else { 
+            throw new Exception("Failed Login");
+        }
     }
     
        

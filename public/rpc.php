@@ -23,7 +23,10 @@
         APPLICATION_ENV,
         APPLICATION_PATH . '/configs/application.ini'
     );
-    $application->bootstrap();
+    $application->bootstrap();       
+    Bootstrap::setBootstrap($application->getBootstrap());
+    
+    $db = $application->getBootstrap()->getResource('db');
     
     $serverModel = new Application_Model_Server();
 
