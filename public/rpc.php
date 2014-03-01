@@ -25,10 +25,10 @@
     );
     $application->bootstrap();
     
-    $calculator = new Application_Model_Calculator();
+    $serverModel = new Application_Model_Server();
 
     $server = new Zend_Json_Server();
-    $server->setClass("Application_Model_Calculator");
+    $server->setClass($serverModel);
 
     if ('GET' == filter_input(INPUT_SERVER, "REQUEST_METHOD", FILTER_SANITIZE_STRING)){
         // Indicate the URL endpoint, and the JSON-RPC version used:
