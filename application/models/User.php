@@ -94,7 +94,7 @@ class Application_Model_User extends Zend_Db_Table_Abstract {
 
         
         if( ($result = $cache->load($cacheID)) !== false ) {
-            $cache->touch($cacheID); // extend life by an hour
+            $cache->touch($cacheID,3600); // extend life by an hour
             return $result;  
         }  else {
             throw new Exception("Invalid Session: "+$sessionID);
