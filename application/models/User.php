@@ -82,6 +82,21 @@ class Application_Model_User extends Zend_Db_Table_Abstract {
     }
     
     /**
+     * Clear a session if it exists
+     * @param type $sessionID
+     * @return boolean true/false on success
+     */
+    public function deleteSession($sessionID){
+        $cache = $this->getCache();
+        
+        if($cache->test($sessionID)){
+            $cache->remove($sessionID);
+            return true;
+        }
+        return false;
+    }
+    
+    /**
      * This pulls the user db row out of the cache (see createSession)
      * @param type $sessionID
      * @return type
