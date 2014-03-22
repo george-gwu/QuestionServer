@@ -13,7 +13,7 @@ class Application_Model_Server {
      * @param  int $role    Role Code (1-Teacher/2-Student) Required but Client Sets
      * @return int $userID  A user ID is returned on successful registration
      */
-    public function signUp($userName, $UPWD, $role=2) {
+    public function SignUp($userName, $UPWD, $role=2) {
         
         $validator = new Zend_Validate_Alnum();
         if(!$validator->isValid($userName)){
@@ -46,8 +46,10 @@ class Application_Model_Server {
      * @param  string $password
      * @return string $sessionID Hex String of Session ID
      * @return int    $role  Role Code (1-User/0-Admin)
+     * 
+     * curl -i -X POST -d '{ "jsonrpc": "2.0", "method": "LogIn",  "params": { "userName": "test",   "UPWD": "test"  }, "id": 1}' http://107.170.68.145/rpc.php
      */
-    public function logIn($userName, $UPWD) {
+    public function LogIn($userName, $UPWD) {
         
         $userDb = new Application_Model_User();
         $valid = $userDb->isUserPasswordValid($userName, $UPWD);
@@ -64,7 +66,7 @@ class Application_Model_Server {
     }
     
        
-    public function logOut($sessionID){
+    public function LogOut($sessionID){
         $userDb = new Application_Model_User();
         if($userDb->deleteSession($sessionID)){
             return array('success'=>true);            
