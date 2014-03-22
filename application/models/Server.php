@@ -69,8 +69,8 @@ class Application_Model_Server {
        
     /**
      * Log out a session
-     * @param type $sessionID
-     * @return type
+     * @param String $sessionID
+     * @return Success/Exception
      * @throws Exception
      */
     public function LogOut($sessionID){
@@ -84,8 +84,8 @@ class Application_Model_Server {
    
     /**
      * Search for an exam where the teacher owns it
-     * @param type $userName
-     * @param type $content is keyword
+     * @param String $userName
+     * @param String $content is keyword
      */
     public function TeacherSearch($userName, $content){
         $examDb = new Application_Model_Exam();
@@ -109,7 +109,7 @@ class Application_Model_Server {
     
     /**
      * Search for published exams
-     * @param type $content is keyword
+     * @param String $content is keyword
      */
     public function StudentSearch($content){
         $examDb = new Application_Model_Exam();
@@ -133,7 +133,7 @@ class Application_Model_Server {
     
     /**
      * Teacher get Exam
-     * @param type $content examID
+     * @param int $content examID
      */
     public function GetExam($content){
         $examDb = new Application_Model_Exam();
@@ -142,7 +142,7 @@ class Application_Model_Server {
     
     /**
      * Student get Exam
-     * @param type $content examID
+     * @param int $content examID
      */
     public function TakeExam($userName, $content){
         $scoresDb = new Application_Model_Scores();
@@ -158,7 +158,7 @@ class Application_Model_Server {
     
     /**
      * Delete Exam
-     * @param type $content examID
+     * @param int $content examID
      */
     public function DeleteExam($content){
         $examDb = new Application_Model_Exam();
@@ -222,9 +222,9 @@ class Application_Model_Server {
     
     /**
      * Submit an Exam Score
-     * @param type $userName
-     * @param type $examID
-     * @param type $score
+     * @param String $userName
+     * @param int $examID
+     * @param int $score
      * @return Success/Error
      * @throws Exception
      */
@@ -264,8 +264,8 @@ class Application_Model_Server {
     
     /**
      * Teacher Search Scores
-     * @param type $userName unused
-     * @param type $content examID
+     * @param String $userName unused
+     * @param int $content examID
      * @return Scores
      * @throws Exception
      */
