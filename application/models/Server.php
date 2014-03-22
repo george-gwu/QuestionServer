@@ -184,6 +184,8 @@ class Application_Model_Server {
         
         if($deleted==0){
             throw new Exception("Invalid Exam", -32002);
+        } else {
+            return array('success'=>true);            
         }
     }
 

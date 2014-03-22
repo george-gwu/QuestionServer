@@ -61,7 +61,7 @@ class Application_Model_Question extends Zend_Db_Table_Abstract {
     
     
     public function deleteQuestionsForExam($examID){
-        $where = $this->getAdapter()->quoteInto('ID = ?', (int)$examID);
+        $where = $this->getAdapter()->quoteInto('examID = ?', (int)$examID);
  
         return $this->delete($where);
     }
