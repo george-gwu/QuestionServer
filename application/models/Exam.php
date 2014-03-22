@@ -57,6 +57,15 @@ class Application_Model_Exam extends Zend_Db_Table_Abstract {
         return $this->update($data, $where);
  
     }
+    
+    public function updateExamStatus($examID,$status){
+        $data = array();
+        $data['status']=$status;
+        
+        $where = $this->getAdapter()->quoteInto('ID = ?', (int)$examID);
+        
+        return $this->update($data, $where);
+    }
 
     
     /**

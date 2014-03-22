@@ -188,5 +188,41 @@ class Application_Model_Server {
             return array('success'=>true);            
         }
     }
+    
+    
+    public function PublishExam($content){        
+        $examDb = new Application_Model_Exam();
+        $updated = $examDb->updateExamStatus($content, Application_Model_Exam::$ONGOING);
+        
+        if($updated==0){
+            return array('success'=>false); 
+        } else {
+            return array('success'=>true);            
+        }        
+    }
+    
+    public function UnpublishExam($content){        
+        $examDb = new Application_Model_Exam();
+        $updated = $examDb->updateExamStatus($content, Application_Model_Exam::$UNPUBLISHED);
+        
+        if($updated==0){
+            return array('success'=>false); 
+        } else {
+            return array('success'=>true);            
+        }        
+    }
+    
+    public function TerminateExam($content){        
+        $examDb = new Application_Model_Exam();
+        
+        $updated = $examDb->updateExamStatus($content, Application_Model_Exam::$TERMINATED);
+        if($updated==0){
+            return array('success'=>false); 
+        } else {
+            return array('success'=>true);            
+        }        
+        
+    }
+    
 
 }
