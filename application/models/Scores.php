@@ -50,11 +50,18 @@ class Application_Model_Scores extends Zend_Db_Table_Abstract {
      * @param int $examID
      * @return Scores Array
      */
-    public function searchScores($user, $examID=null){
-        $select  = $this->select()->where('LOWER(user) = ?', (int)strtolower($user));
+    public function searchScores($user=null, $examID=null){
+        $select  = $this->select()->from(array('s' => 'scores'),new Zend_Db_Expr('`s`.*'));        
+        $select->setIntegrityCheck(false);
+        $select->join(array('e' => 'exam'), 's.examID = e.ID', array('e.title')); 
+        
+        if(!empty($user)){
+            $select->where('LOWER(s.user) = ?', (int)strtolower($user));        
+        }
+        
         
         if(!is_null($examID)){
-            $select->where('examID = ?', (int)$examID);
+            $select->where('s.examID = ?', (int)$examID);
         }
         
         return $this->fetchAll($select);

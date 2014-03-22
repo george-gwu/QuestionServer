@@ -171,7 +171,11 @@ class Application_Model_Server {
         }
     }
     
-    
+    /**
+     * Publish Exam
+     * @param int $content ExamID
+     * @return success status
+     */
     public function PublishExam($content){        
         $examDb = new Application_Model_Exam();
         $updated = $examDb->updateExamStatus($content, Application_Model_Exam::$ONGOING);
@@ -183,6 +187,11 @@ class Application_Model_Server {
         }        
     }
     
+    /**
+     * Unpublish Exam
+     * @param int $content ExamID
+     * @return success status
+     */
     public function UnpublishExam($content){        
         $examDb = new Application_Model_Exam();
         $updated = $examDb->updateExamStatus($content, Application_Model_Exam::$UNPUBLISHED);
@@ -194,6 +203,11 @@ class Application_Model_Server {
         }        
     }
     
+    /**
+     * Terminate Exam
+     * @param int $content ExamID
+     * @return success status
+     */
     public function TerminateExam($content){        
         $examDb = new Application_Model_Exam();
         
@@ -206,6 +220,14 @@ class Application_Model_Server {
         
     }
     
+    /**
+     * Submit an Exam Score
+     * @param type $userName
+     * @param type $examID
+     * @param type $score
+     * @return Success/Error
+     * @throws Exception
+     */
     public function SubmitExam($userName, $examID, $score){
         $scoresDb = new Application_Model_Scores();
         if($scoresDb->submitScore($userName, $examID, $score)>1){
@@ -215,6 +237,13 @@ class Application_Model_Server {
         }
     }
     
+    /**
+     * Student Score Search
+     * @param String $userName
+     * @param int $content ExamID
+     * @return Scores
+     * @throws Exception
+     */
     public function SearchScore($userName, $content=null){
         
         if(empty($content)){$content=null;}
@@ -225,13 +254,36 @@ class Application_Model_Server {
         if(count($scores)>0){
             $results = array();
             foreach($scores as $score){
-                $results[] = array('examID'=> $score['examID'], 'score' => $score['score']);            
+                $results[] = array('userName'=>$score['user'],  'score' => $score['score'], 'subject' => $score['title']);            //'examID'=> $score['examID'],
             }
             return Application_Model_Utility::convertArrayToJavaLinkedList($results,'nextScoreItem');
         } else {
             throw new Exception("No Score!", -32005);
         }
     }
+    
+    /**
+     * Teacher Search Scores
+     * @param type $userName unused
+     * @param type $content examID
+     * @return Scores
+     * @throws Exception
+     */
+    public function ScoreStatics($userName, $content){
+               
+        $scoresDb = new Application_Model_Scores();
+        $scores = $scoresDb->searchScores(null, $content)->toArray();
+        
+        if(count($scores)>0){
+            $results = array();
+            foreach($scores as $score){
+                $results[] = array('userName'=>$score['user'],  'score' => $score['score'], 'subject' => $score['title']);            //'examID'=> $score['examID'],
+            }
+            return Application_Model_Utility::convertArrayToJavaLinkedList($results,'nextScoreItem');
+        } else {
+            throw new Exception("No Score!", -32005);
+        }
+    }    
     
 
 }
