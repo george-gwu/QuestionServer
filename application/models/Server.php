@@ -4,6 +4,7 @@
  * Server - Main Class exposed via JSON-RPC
  */
 class Application_Model_Server {
+   
 
     /**
      * Register a user
@@ -66,6 +67,12 @@ class Application_Model_Server {
     }
     
        
+    /**
+     * Log out a session
+     * @param type $sessionID
+     * @return type
+     * @throws Exception
+     */
     public function LogOut($sessionID){
         $userDb = new Application_Model_User();
         if($userDb->deleteSession($sessionID)){
@@ -75,5 +82,46 @@ class Application_Model_Server {
         }
     }
    
+    /**
+     * Search for an exam where the teacher owns it
+     * @param type $userName
+     * @param type $content is keyword
+     */
+    public function TeacherSearch($userName, $content){
+        $examDb = new Application_Model_Exam();
+        $examResults = $examDb->searchExams($content, $userName);
+        
+        $arrayResults = $examResults->toArray();
+        
+        $results = array();
+        
+        foreach($arrayResults as $arr){
+            $results[] = array('examID'=>$arr['ID'], 'subject'=>$arr['title'], 'status'=>$arr['status']);
+        }
+        
+        return $results;
+        
+    }
+    
+    /**
+     * Search for a published exams
+     * @param type $content is keyword
+     */
+    public function StudentSearch($content){
+        $examDb = new Application_Model_Exam();
+        $examResults = $examDb->searchExams($content,null,array(Application_Model_Exam::$ONGOING));
+        
+        $arrayResults = $examResults->toArray();
+        
+        $results = array();
+        
+        foreach($arrayResults as $arr){
+            $results[] = array('examID'=>$arr['ID'], 'subject'=>$arr['title'], 'status'=>$arr['status']);
+        }
+        
+        return $results;
+        
+    }
+    
 
 }
