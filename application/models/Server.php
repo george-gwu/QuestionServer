@@ -131,6 +131,47 @@ class Application_Model_Server {
         
     }
     
-    
+    /**
+     * Teacher get Exam
+     * @param type $content examID
+     */
+    public function GetExam($content){
+        $examDb = new Application_Model_Exam();
+        $questionDb = new Application_Model_Question();
+        $answerDb = new Application_Model_Answer();
+        
+        $exam = $examDb->getExam($content)->toArray();
+        
+        if(!isset($exam['ID'])){throw new Exception("No Results!", -32002);}
+        
+        $questions = $questionDb->getQuestionsForExam($exam['ID'])->toArray();
+        
+        $response = array(  'examID'    =>$exam['ID'], 
+                            'subject'   =>$exam['title'], 
+                            'EPWD'      =>$exam['password'],
+                            'timeLimit' =>$exam['timeLimit'],
+                            'status'    =>$exam['status']);
+        
+        $responseQuestionsRaw =array();
+        
+        foreach($questions as $question){
+            $answers = $answerDb->getAnswers($question['ID'])->toArray();            
+            $answerResponseRaw = array();
+            
+            foreach($answers as $answer){
+                $answerResponseRaw[] = array(  'answerID'  =>  $answer['ID'], 
+                                                'aText'     =>  $answer['text'], 
+                                                'ifCorrect' =>  ($answer['ID']==$question['validAnswerID'])
+                                            );                    
+            }        
+            $answerResponse = Application_Model_Utility::convertArrayToJavaLinkedList($answerResponseRaw, 'nextAnswer');            
+            $responseQuestionsRaw[] = array('questionID'=> $question['ID'], 'qText'=>$question['text'], 'firstAnswer'=>$answerResponse);            
+        }
+        
+        $responseQuestions = Application_Model_Utility::convertArrayToJavaLinkedList($responseQuestionsRaw, 'nextQuestion');
+        $response['firstQuestion'] = $responseQuestions;
+            
+        return $response;        
+    }
 
 }

@@ -32,7 +32,7 @@ class Application_Model_Answer extends Zend_Db_Table_Abstract {
      */
     public function getAnswers($questionID){
         
-        $select  = $this->select()->where('ID = ?', $questionID);
+        $select  = $this->select()->where('questionID = ?', $questionID);
  
         return $this->fetchAll($select);
            
