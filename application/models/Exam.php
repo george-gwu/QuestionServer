@@ -81,6 +81,42 @@ class Application_Model_Exam extends Zend_Db_Table_Abstract {
            
     }
     
+    public function getExamination($examID){
+        $questionDb = new Application_Model_Question();
+        $answerDb = new Application_Model_Answer();
+        
+        $exam = $this->getExam($examID)->toArray();
+                
+        $questions = $questionDb->getQuestionsForExam($exam['ID'])->toArray();
+        
+        $response = array(  'examID'    =>(int)$exam['ID'], 
+                            'subject'   =>$exam['title'], 
+                            'EPWD'      =>$exam['password'],
+                            'timeLimit' =>(int)$exam['timeLimit'],
+                            'status'    =>$exam['status']);
+        
+        $responseQuestionsRaw =array();
+        
+        foreach($questions as $question){
+            $answers = $answerDb->getAnswers($question['ID'])->toArray();            
+            $answerResponseRaw = array();
+            
+            foreach($answers as $answer){
+                $answerResponseRaw[] = array(  'answerID'  =>  (int)$answer['ID'], 
+                                                'aText'     =>  $answer['text'], 
+                                                'ifCorrect' =>  ($answer['ID']==$question['validAnswerID'])
+                                            );                    
+            }        
+            $answerResponse = Application_Model_Utility::convertArrayToJavaLinkedList($answerResponseRaw, 'nextAnswer');            
+            $responseQuestionsRaw[] = array('questionID'=> (int)$question['ID'], 'qText'=>$question['text'], 'firstAnswer'=>$answerResponse);            
+        }
+        
+        $responseQuestions = Application_Model_Utility::convertArrayToJavaLinkedList($responseQuestionsRaw, 'nextQuestion');
+        $response['firstQuestion'] = $responseQuestions;
+        
+        return $response;
+    }
+    
     
     public function searchExams($query, $userName=null, $status=array()){
         $select  = $this->select();
