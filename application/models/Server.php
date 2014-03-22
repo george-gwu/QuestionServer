@@ -144,10 +144,16 @@ class Application_Model_Server {
      * Student get Exam
      * @param type $content examID
      */
-    public function TakeExam($content){
-        //@TODO: Make sure no previous submissions
-        $examDb = new Application_Model_Exam();
-        return $examDb->getExamination($content);            
+    public function TakeExam($userName, $content){
+        $scoresDb = new Application_Model_Scores();
+        
+        if(!$scoresDb->checkForScore($userName,$content)){
+            $examDb = new Application_Model_Exam();
+            return $examDb->getExamination($content);            
+        } else {
+            throw new Exception("Taken before!", -32004);
+        }
+        
     }    
     
     /**
@@ -198,6 +204,33 @@ class Application_Model_Server {
             return array('success'=>true);            
         }        
         
+    }
+    
+    public function SubmitExam($userName, $examID, $score){
+        $scoresDb = new Application_Model_Scores();
+        if($scoresDb->submitScore($userName, $examID, $score)>1){
+            return array('success'=>true);            
+        } else {
+            throw new Exception("Taken before!", -32004);
+        }
+    }
+    
+    public function SearchScore($userName, $content=null){
+        
+        if(empty($content)){$content=null;}
+        
+        $scoresDb = new Application_Model_Scores();
+        $scores = $scoresDb->searchScores($userName, $content)->toArray();
+        
+        if(count($scores)>0){
+            $results = array();
+            foreach($scores as $score){
+                $results[] = array('examID'=> $score['examID'], 'score' => $score['score']);            
+            }
+            return Application_Model_Utility::convertArrayToJavaLinkedList($results,'nextScoreItem');
+        } else {
+            throw new Exception("No Score!", -32005);
+        }
     }
     
 

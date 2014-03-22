@@ -89,6 +89,30 @@ UNLOCK TABLES;
 
 
 --
+-- Definition of table `question`.`scores`
+--
+
+DROP TABLE IF EXISTS `question`.`scores`;
+CREATE TABLE  `question`.`scores` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `user` varchar(255) NOT NULL,
+  `examID` int(11) NOT NULL,
+  `score` int(3) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `userexam` (`user`,`examID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `question`.`scores`
+--
+
+/*!40000 ALTER TABLE `scores` DISABLE KEYS */;
+LOCK TABLES `scores` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `scores` ENABLE KEYS */;
+
+
+--
 -- Definition of table `question`.`user`
 --
 
@@ -99,7 +123,7 @@ CREATE TABLE  `question`.`user` (
   `password` varchar(64) NOT NULL,
   `role` int(1) NOT NULL DEFAULT '2',
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `question`.`user`
@@ -111,3 +135,5 @@ INSERT INTO `question`.`user` VALUES  (1,'test','b8ffd16722f742ef29e9e8f0174379d
  (2,'test2','89c4db0ea3ed2b6446208398bfa41a6ff0b9692f',2);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
+
+
