@@ -269,7 +269,7 @@ class Application_Model_Server {
      * @return Scores
      * @throws Exception
      */
-    public function ScoreStatics($userName, $content){
+    public function ScoreStatistics($userName, $content){
                
         $scoresDb = new Application_Model_Scores();
         $scores = $scoresDb->searchScores(null, $content)->toArray();
