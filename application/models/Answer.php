@@ -17,7 +17,7 @@ class Application_Model_Answer extends Zend_Db_Table_Abstract {
     public function createAnswer($questionID, $text){
          
         $data = array(
-            'questionID' => $questionID,
+            'questionID' => (int)$questionID,
             'text' => $text
         );
  
@@ -32,10 +32,17 @@ class Application_Model_Answer extends Zend_Db_Table_Abstract {
      */
     public function getAnswers($questionID){
         
-        $select  = $this->select()->where('questionID = ?', $questionID);
+        $select  = $this->select()->where('questionID = ?', (int)$questionID);
  
         return $this->fetchAll($select);
            
+    }
+    
+    public function deleteAnswers($questionID){
+        $where = $this->getAdapter()->quoteInto('questionID = ?', (int)$questionID);
+ 
+        return $this->delete($where);
+        
     }
     
 

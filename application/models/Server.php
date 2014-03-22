@@ -96,7 +96,7 @@ class Application_Model_Server {
         if(count($arrayResults)>0){            
             $results = array();
             foreach($arrayResults as $arr){
-                $results[] = array('examID'=>$arr['ID'], 'subject'=>$arr['title'], 'status'=>$arr['status']);
+                $results[] = array('examID'=>(int)$arr['ID'], 'subject'=>$arr['title'], 'status'=>$arr['status']);
             }
         } else {
             throw new Exception("No Results!", -32002);
@@ -121,7 +121,7 @@ class Application_Model_Server {
         if(count($arrayResults)>0){            
             $results = array();
             foreach($arrayResults as $arr){
-                $results[] = array('examID'=>$arr['ID'], 'subject'=>$arr['title'], 'status'=>$arr['status']);
+                $results[] = array('examID'=>(int)$arr['ID'], 'subject'=>$arr['title'], 'status'=>$arr['status']);
             }
         } else {
             throw new Exception("No Results!", -32002);
@@ -146,10 +146,10 @@ class Application_Model_Server {
         
         $questions = $questionDb->getQuestionsForExam($exam['ID'])->toArray();
         
-        $response = array(  'examID'    =>$exam['ID'], 
+        $response = array(  'examID'    =>(int)$exam['ID'], 
                             'subject'   =>$exam['title'], 
                             'EPWD'      =>$exam['password'],
-                            'timeLimit' =>$exam['timeLimit'],
+                            'timeLimit' =>(int)$exam['timeLimit'],
                             'status'    =>$exam['status']);
         
         $responseQuestionsRaw =array();
@@ -159,19 +159,32 @@ class Application_Model_Server {
             $answerResponseRaw = array();
             
             foreach($answers as $answer){
-                $answerResponseRaw[] = array(  'answerID'  =>  $answer['ID'], 
+                $answerResponseRaw[] = array(  'answerID'  =>  (int)$answer['ID'], 
                                                 'aText'     =>  $answer['text'], 
                                                 'ifCorrect' =>  ($answer['ID']==$question['validAnswerID'])
                                             );                    
             }        
             $answerResponse = Application_Model_Utility::convertArrayToJavaLinkedList($answerResponseRaw, 'nextAnswer');            
-            $responseQuestionsRaw[] = array('questionID'=> $question['ID'], 'qText'=>$question['text'], 'firstAnswer'=>$answerResponse);            
+            $responseQuestionsRaw[] = array('questionID'=> (int)$question['ID'], 'qText'=>$question['text'], 'firstAnswer'=>$answerResponse);            
         }
         
         $responseQuestions = Application_Model_Utility::convertArrayToJavaLinkedList($responseQuestionsRaw, 'nextQuestion');
         $response['firstQuestion'] = $responseQuestions;
             
         return $response;        
+    }
+    
+    /**
+     * Delete Exam
+     * @param type $content examID
+     */
+    public function DeleteExam($content){
+        $examDb = new Application_Model_Exam();
+        $deleted = $examDb->deleteExam($content);
+        
+        if(count($deleted==0)){
+            throw new Exception("Invalid Exam", -32002);
+        }
     }
 
 }

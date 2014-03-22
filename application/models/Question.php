@@ -32,7 +32,7 @@ class Application_Model_Question extends Zend_Db_Table_Abstract {
      */
     public function setValidAnswer($questionID, $answerID){
         $data = array('validAnswerID' => $answerID);
-        $where = $this->getAdapter()->quoteInto('ID = ?', $questionID);
+        $where = $this->getAdapter()->quoteInto('ID = ?', (int)$questionID);
         
         return $this->update($data, $where);
         
@@ -46,7 +46,7 @@ class Application_Model_Question extends Zend_Db_Table_Abstract {
      */
     public function getQuestion($questionID){
         
-        $select  = $this->select()->where('ID = ?', $questionID);
+        $select  = $this->select()->where('ID = ?', (int)$questionID);
  
         return $this->fetchRow($select);
            
@@ -54,11 +54,17 @@ class Application_Model_Question extends Zend_Db_Table_Abstract {
     
     public function getQuestionsForExam($examID){
 
-        $select  = $this->select()->where('examID = ?', $examID);
+        $select  = $this->select()->where('examID = ?', (int)$examID);
  
         return $this->fetchAll($select);
     }
     
+    
+    public function deleteQuestionsForExam($examID){
+        $where = $this->getAdapter()->quoteInto('ID = ?', (int)$examID);
+ 
+        return $this->delete($where);
+    }
 
     
 }

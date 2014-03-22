@@ -52,7 +52,7 @@ class Application_Model_Exam extends Zend_Db_Table_Abstract {
         if($password!=null){ $data['password']=$password; }
         if($timeLimit!=null){ $data['timeLimit']=$timeLimit; }        
            
-        $where = $this->getAdapter()->quoteInto('ID = ?', $examID);
+        $where = $this->getAdapter()->quoteInto('ID = ?', (int)$examID);
         
         return $this->update($data, $where);
  
@@ -66,7 +66,7 @@ class Application_Model_Exam extends Zend_Db_Table_Abstract {
      */
     public function getExam($examID){
         
-        $select  = $this->select()->where('ID = ?', $examID);
+        $select  = $this->select()->where('ID = ?', (int)$examID);
  
         return $this->fetchRow($select);
            
@@ -89,6 +89,26 @@ class Application_Model_Exam extends Zend_Db_Table_Abstract {
         }
         
         return $this->fetchAll($select);
+    }
+    
+    
+    public function deleteExam($examID){
+        
+        $questionDb = new Application_Model_Question();
+        $answerDb = new Application_Model_Answer();
+        
+        $questions = $questionDb->getQuestionsForExam($examID)->toArray();
+        
+        foreach($questions as $question){
+            $answerDb->deleteAnswers($question['ID']);
+        }
+        
+        $questionDb->deleteQuestionsForExam($examID);
+                
+        $where = $this->getAdapter()->quoteInto('ID = ?', (int)$examID);
+        
+        return $this->delete($where);
+        
     }
     
 
