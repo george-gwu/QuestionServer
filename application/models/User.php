@@ -130,16 +130,3 @@ class Application_Model_User extends Zend_Db_Table_Abstract {
 
     
 }
-
-/**
-mysql> describe user;
-+----------+-------------+------+-----+---------+----------------+
-| Field    | Type        | Null | Key | Default | Extra          |
-+----------+-------------+------+-----+---------+----------------+
-| ID       | int(11)     | NO   | PRI | NULL    | auto_increment |
-| user     | varchar(32) | NO   |     | NULL    |                |
-| password | varchar(64) | NO   |     | NULL    |                |
-| role     | int(1)      | YES  |     | 1       |                |
-+----------+-------------+------+-----+---------+----------------+
-4 rows in set (0.00 sec)
- */
