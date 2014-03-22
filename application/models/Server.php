@@ -100,9 +100,10 @@ class Application_Model_Server {
             }
         } else {
             throw new Exception("No Results!", -32002);
-        }
         
-        return $results;
+            
+        }
+        return Application_Model_Utility::convertArrayToJavaLinkedList($results,'nextExamItem');
         
     }
     
@@ -126,10 +127,9 @@ class Application_Model_Server {
             throw new Exception("No Results!", -32002);
         }
         
-        return $results;
+        return Application_Model_Utility::convertArrayToJavaLinkedList($results,'nextExamItem');
         
     }
-    
     
     
 

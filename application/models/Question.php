@@ -52,6 +52,13 @@ class Application_Model_Question extends Zend_Db_Table_Abstract {
            
     }
     
+    public function getQuestionsForExam($examID){
+
+        $select  = $this->select()->where('examID = ?', $examID);
+ 
+        return $this->fetchAll($select);
+    }
+    
 
     
 }
