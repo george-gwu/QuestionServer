@@ -182,7 +182,7 @@ class Application_Model_Server {
         $examDb = new Application_Model_Exam();
         $deleted = $examDb->deleteExam($content);
         
-        if(count($deleted==0)){
+        if($deleted==0){
             throw new Exception("Invalid Exam", -32002);
         }
     }
