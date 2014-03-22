@@ -93,10 +93,13 @@ class Application_Model_Server {
         
         $arrayResults = $examResults->toArray();
         
-        $results = array();
-        
-        foreach($arrayResults as $arr){
-            $results[] = array('examID'=>$arr['ID'], 'subject'=>$arr['title'], 'status'=>$arr['status']);
+        if(count($arrayResults)>0){            
+            $results = array();
+            foreach($arrayResults as $arr){
+                $results[] = array('examID'=>$arr['ID'], 'subject'=>$arr['title'], 'status'=>$arr['status']);
+            }
+        } else {
+            throw new Exception("No Results!", -32002);
         }
         
         return $results;
@@ -104,7 +107,7 @@ class Application_Model_Server {
     }
     
     /**
-     * Search for a published exams
+     * Search for published exams
      * @param type $content is keyword
      */
     public function StudentSearch($content){
@@ -113,15 +116,21 @@ class Application_Model_Server {
         
         $arrayResults = $examResults->toArray();
         
-        $results = array();
         
-        foreach($arrayResults as $arr){
-            $results[] = array('examID'=>$arr['ID'], 'subject'=>$arr['title'], 'status'=>$arr['status']);
+        if(count($arrayResults)>0){            
+            $results = array();
+            foreach($arrayResults as $arr){
+                $results[] = array('examID'=>$arr['ID'], 'subject'=>$arr['title'], 'status'=>$arr['status']);
+            }
+        } else {
+            throw new Exception("No Results!", -32002);
         }
         
         return $results;
         
     }
+    
+    
     
 
 }
