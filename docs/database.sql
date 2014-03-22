@@ -1,3 +1,4 @@
+
 --
 -- Create schema question
 --
@@ -15,7 +16,7 @@ CREATE TABLE  `question`.`answers` (
   `questionID` int(11) NOT NULL,
   `text` varchar(255) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `question`.`answers`
@@ -23,6 +24,13 @@ CREATE TABLE  `question`.`answers` (
 
 /*!40000 ALTER TABLE `answers` DISABLE KEYS */;
 LOCK TABLES `answers` WRITE;
+INSERT INTO `question`.`answers` VALUES  (1,1,'3'),
+ (2,1,'4'),
+ (3,1,'5'),
+ (4,1,'6'),
+ (5,1,'7'),
+ (6,2,'True'),
+ (7,2,'False');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `answers` ENABLE KEYS */;
 
@@ -35,11 +43,12 @@ DROP TABLE IF EXISTS `question`.`exam`;
 CREATE TABLE  `question`.`exam` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL DEFAULT '',
+  `password` varchar(255) DEFAULT NULL,
   `timeLimit` int(11) DEFAULT NULL,
   `status` int(1) NOT NULL DEFAULT '0',
+  `owner` varchar(255) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `question`.`exam`
@@ -47,6 +56,8 @@ CREATE TABLE  `question`.`exam` (
 
 /*!40000 ALTER TABLE `exam` DISABLE KEYS */;
 LOCK TABLES `exam` WRITE;
+INSERT INTO `question`.`exam` VALUES  (1,'Test Exam',NULL,60,1,'test'),
+ (2,'Other Test Exam','password',NULL,1,'test');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `exam` ENABLE KEYS */;
 
@@ -63,7 +74,7 @@ CREATE TABLE  `question`.`questions` (
   `validAnswerID` int(2) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `examindex` (`examID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `question`.`questions`
@@ -71,6 +82,8 @@ CREATE TABLE  `question`.`questions` (
 
 /*!40000 ALTER TABLE `questions` DISABLE KEYS */;
 LOCK TABLES `questions` WRITE;
+INSERT INTO `question`.`questions` VALUES  (1,1,'What is 2+2?',2),
+ (2,1,'The sky is blue.',6);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `questions` ENABLE KEYS */;
 
@@ -98,4 +111,3 @@ INSERT INTO `question`.`user` VALUES  (1,'test','b8ffd16722f742ef29e9e8f0174379d
  (2,'test2','89c4db0ea3ed2b6446208398bfa41a6ff0b9692f',2);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
-
