@@ -40,5 +40,11 @@ class Application_Model_Query extends Zend_Db_Table_Abstract {
  
         return $this->insert($data);
     }
+    
+    public function getLast($num=10){
+         $select  = $this->select()->order('ID DESC')->limit($num);
+ 
+        return $this->fetchAll($select);
+    }
             
 }
