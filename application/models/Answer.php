@@ -34,7 +34,7 @@ class Application_Model_Answer extends Zend_Db_Table_Abstract {
      */
     public function getAnswers($questionID){
         
-        $select  = $this->select()->where('questionID = ?', (int)$questionID);
+        $select  = $this->select()->where('questionID = ?', (int)$questionID)->order('ID ASC');
  
         return $this->fetchAll($select);
            

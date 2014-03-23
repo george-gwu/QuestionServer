@@ -133,6 +133,8 @@ class Application_Model_Exam extends Zend_Db_Table_Abstract {
             $select->where('status IN(?)', $status);
         }
         
+        $select->order('title ASC');
+        
         return $this->fetchAll($select);
     }
     
