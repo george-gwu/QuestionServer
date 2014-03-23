@@ -52,12 +52,13 @@
         return;
     }
     
-    $server->setAutoEmitResponse(false);
+    $server->setAutoEmitResponse(true);
 
     $rawJSON = $server->handle();
-
+/*
     if(APPLICATION_ENV=='development'){
         echo  Zend_Json::prettyPrint($rawJSON);
     } else {
         echo $rawJSON;
     }
+ * */
