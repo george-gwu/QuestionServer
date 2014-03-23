@@ -50,11 +50,23 @@
         }
         
         return;
-    }
+    } else {
     
-    $server->setAutoEmitResponse(true);
+        $server->setAutoEmitResponse(false);
 
-    $rawJSON = $server->handle();
+        $rawJSON = $server->handle();
+
+        $queryDb = new Application_Model_Query();
+        $queryDb->submitEntry(
+                                $server->getRequest(), 
+                                filter_input(INPUT_SERVER, "REMOTE_ADDR", FILTER_SANITIZE_STRING), 
+                                filter_input(INPUT_SERVER, "HTTP_USER_AGENT", FILTER_SANITIZE_STRING), 
+                                $rawJSON
+                );
+        
+        echo $rawJSON;
+    }
+            
 /*
     if(APPLICATION_ENV=='development'){
         echo  Zend_Json::prettyPrint($rawJSON);

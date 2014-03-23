@@ -277,6 +277,8 @@ class Application_Model_Server {
         
         if(empty($content)){$content=null;}
         
+        if(empty($userName)){ throw new Exception("User Name is Required."); }
+        
         $scoresDb = new Application_Model_Scores();
         $scores = $scoresDb->searchScores($userName, $content)->toArray();
         
