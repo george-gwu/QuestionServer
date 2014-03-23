@@ -34,13 +34,14 @@
     $queries = $queryDb->getLast(50)->toArray();
     
     print "<html><title>Debug Interface</title><body><table border=1>";
-    print "<tr><td>Time</td><td>ComputerID</td><td>Request</td><td>Response</td></tr>";
+    print "<tr><td><center>Time</center></td><td>ComputerID</td><td><center>Request</center></td><td><center>Response</center></td></tr>";
     
     foreach($queries as $query){
-        print '<tr><td>'  . $query['ts'] . '</td><td>'. substr(md5($query['ip'] . $query['useragent']),0,6) .'</td><td><pre>' 
-            . Zend_Json::prettyPrint($query['command']) . '</pre></td><td><pre>'  . Zend_Json::prettyPrint($query['response']) . '</pre></td></tr>';
+        print '<tr><td>'  . $query['ts'] . '</td><td><center>' 
+            . substr(md5($query['ip'] . $query['useragent']),0,6) .'</center></td><td valign=top><pre>' 
+            . Zend_Json::prettyPrint($query['command']) . '</pre></td><td valign=top><pre>'  
+            . Zend_Json::prettyPrint($query['response']) . '</pre></td></tr>';
     }
-    //echo  Zend_Json::prettyPrint($smd);
     
     print '</table>';
     

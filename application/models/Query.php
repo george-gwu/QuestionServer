@@ -1,25 +1,14 @@
 <?php
 
 /**
- * Scores Model
+ * Query Model
  * 
  */
 
 class Application_Model_Query extends Zend_Db_Table_Abstract {
     protected $_name   = 'query';
     protected $_primary = 'ID';              
-    
-    /**
-     * CREATE TABLE  `question`.`query` (
-  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `command` text NOT NULL,
-  `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `ip` varchar(16) NOT NULL,
-  `useragent` varchar(255) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8
-     */
-    
+   
     /**
      * Submit Query Log Entry
      * @param type $command
