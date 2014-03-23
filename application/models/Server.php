@@ -135,6 +135,16 @@ class Application_Model_Server {
         return $examDb->getExamination($content);            
     }
     
+    /**
+     * 
+     * @param String $userName
+     * @param String $subject
+     * @param String $EPWD
+     * @param int $timeLimit
+     * @param int $status
+     * @param LinkedList $firstQuestion
+     * @return Success
+     */
     public function NewExam($userName, $subject, $EPWD, $timeLimit, $status, $firstQuestion){
         $examDb = new Application_Model_Exam();
         $questionDb = new Application_Model_Question();
