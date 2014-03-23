@@ -160,7 +160,7 @@ class Application_Model_Server {
             }            
         }
         
-        return array('success'=>true); 
+        return array('success'=>true, 'examID'=>$examID); 
         
     }
     
