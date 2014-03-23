@@ -256,16 +256,22 @@ class Application_Model_Server {
         }        
         
     }
-    
+
     /**
      * Submit an Exam Score
-     * @param String $userName
-     * @param int $examID
-     * @param int $score
+     * @param doubleencoded $ExamSubmission
      * @return Success/Error
      * @throws Exception
      */
-    public function SubmitExam($userName, $examID, $score){
+    public function SubmitExam($ExamSubmission){
+        // Due to a bug in the Java clients they have to double encode
+        // This is a hack fix to pull out the double encoding per the original protocol
+        $raw = Zend_Json::decode($ExamSubmission);                    
+        $userName = $raw['userName'];
+        $examID = $raw['examID'];            
+        $score = $raw['score'];
+        // End of hack fix
+        
         $scoresDb = new Application_Model_Scores();
         if($scoresDb->submitScore($userName, $examID, $score)>1){
             return array('success'=>true);            

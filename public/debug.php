@@ -33,16 +33,47 @@
     
     $queries = $queryDb->getLast(50)->toArray();
     
-    print "<html><title>Debug Interface</title><body><table border=1>";
-    print "<tr><td><center>Time</center></td><td>ComputerID</td><td><center>Request</center></td><td><center>Response</center></td></tr>";
+    print "<html><title>Debug Interface</title><body>";
+    print "<table border=1>";
+    print "<tr class='head'><td class='time'><center>Time</center></td><td class='comp'>ComputerID</td><td class='req'><center>Request</center></td><td class='resp'><center>Response</center></td></tr>";
     
     foreach($queries as $query){
-        print '<tr><td>'  . $query['ts'] . '</td><td><center>' 
-            . substr(md5($query['ip'] . $query['useragent']),0,6) .'</center></td><td valign=top><pre>' 
-            . Zend_Json::prettyPrint($query['command']) . '</pre></td><td valign=top><pre>'  
+        print '<tr><td class="time">'  . $query['ts'] . '</td><td class="comp"><center>' 
+            . substr(md5($query['ip'] . $query['useragent']),0,6) .'</center></td><td valign=top class="req"><pre>' 
+            . Zend_Json::prettyPrint($query['command']) . '</pre></td><td valign=top class="resp"><pre>'  
             . Zend_Json::prettyPrint($query['response']) . '</pre></td></tr>';
     }
     
     print '</table>';
-    
+    ?>
+<style>
+table {
+  table-layout: fixed;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+tr.head {
+    text-align: center;
+}
+
+td.req {
+  width: 300px;
+  word-wrap:break-word;
+}
+
+td.resp {
+       word-wrap:break-word;
+       width:auto;
+}
+
+td.time, td.comp{
+    width:100px;
+}
+
+td {
+  width: auto;
+  
+}
+</style>
     
