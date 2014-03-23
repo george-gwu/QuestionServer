@@ -103,12 +103,12 @@ class Application_Model_Server {
     }
     
     /**
-     * Search for published exams
+     * Search for all exams, client limits
      * @param String $content is keyword
      */
     public function StudentSearch($content){
         $examDb = new Application_Model_Exam();
-        $examResults = $examDb->searchExams($content,null,array(Application_Model_Exam::$ONGOING));
+        $examResults = $examDb->searchExams($content,null); //,array(Application_Model_Exam::$ONGOING)
         
         $arrayResults = $examResults->toArray();
         

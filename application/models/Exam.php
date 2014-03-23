@@ -21,7 +21,7 @@ class Application_Model_Exam extends Zend_Db_Table_Abstract {
      * @param int $timeLimit in Minutes
      * @return ExamID
      */
-    public function createExam($title, $owner, $status=0, $password=null, $timeLimit=null){
+    public function createExam($title, $owner, $status=0, $password='', $timeLimit=null){
          
         $data = array(
             'title' => $title,
@@ -104,7 +104,7 @@ class Application_Model_Exam extends Zend_Db_Table_Abstract {
             foreach($answers as $answer){
                 $answerResponseRaw[] = array(  'answerID'  =>  (int)$answer['ID'], 
                                                 'aText'     =>  $answer['text'], 
-                                                'ifCorrect' =>  $answer['isValid']
+                                                'ifCorrect' =>  (boolean)$answer['isValid']
                                             );                    
             }        
             $answerResponse = Application_Model_Utility::convertArrayToJavaLinkedList($answerResponseRaw, 'nextAnswer');            
@@ -129,7 +129,7 @@ class Application_Model_Exam extends Zend_Db_Table_Abstract {
             $select->where('LOWER(owner) = ?', strtolower($userName));
         }
        
-        if(count($status)>0){
+        if(!is_null($status) and is_array($status) and count($status)>0){
             $select->where('status IN(?)', $status);
         }
         
