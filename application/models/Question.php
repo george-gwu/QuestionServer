@@ -22,22 +22,7 @@ class Application_Model_Question extends Zend_Db_Table_Abstract {
         );
  
         return $this->insert($data);
-    }
-    
-    /**
-     * Set a valid answer
-     * @param int $questionID
-     * @param int $answerID
-     * @return true/false
-     */
-    public function setValidAnswer($questionID, $answerID){
-        $data = array('validAnswerID' => $answerID);
-        $where = $this->getAdapter()->quoteInto('ID = ?', (int)$questionID);
-        
-        return $this->update($data, $where);
-        
-    }
-    
+    }       
     
     /**
      * Fetch an Question

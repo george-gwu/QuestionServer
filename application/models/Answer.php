@@ -12,13 +12,15 @@ class Application_Model_Answer extends Zend_Db_Table_Abstract {
      * Create an answer
      * @param int $questionID
      * @param String $text
+     * @param int $isValid
      * @return ID
      */
-    public function createAnswer($questionID, $text){
+    public function createAnswer($questionID, $text, $isValid){
          
         $data = array(
             'questionID' => (int)$questionID,
-            'text' => $text
+            'text' => $text,
+            'isValid'   => (int)$isValid
         );
  
         return $this->insert($data);

@@ -25,4 +25,24 @@ class Application_Model_Utility {
         return $root;
     }
     
+    
+    public static function convertJavaLinkedListToArray($linkedList, $joinName){
+        $array = array();
+        
+        do {
+            $element = $linkedList; 
+            unset($element[$joinName]);
+            $array[] = $element;
+            
+            if(isset($linkedList[$joinName])){
+                $temp = $linkedList[$joinName];
+            } else {
+                $temp=null;
+            }
+            $linkedList = $temp;
+        } while($linkedList!= null);
+       
+        return $array;
+    }
+    
 }

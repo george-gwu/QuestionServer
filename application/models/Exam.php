@@ -104,7 +104,7 @@ class Application_Model_Exam extends Zend_Db_Table_Abstract {
             foreach($answers as $answer){
                 $answerResponseRaw[] = array(  'answerID'  =>  (int)$answer['ID'], 
                                                 'aText'     =>  $answer['text'], 
-                                                'ifCorrect' =>  ($answer['ID']==$question['validAnswerID'])
+                                                'ifCorrect' =>  $answer['isValid']
                                             );                    
             }        
             $answerResponse = Application_Model_Utility::convertArrayToJavaLinkedList($answerResponseRaw, 'nextAnswer');            

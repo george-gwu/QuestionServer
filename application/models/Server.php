@@ -73,13 +73,8 @@ class Application_Model_Server {
      * @return Success/Exception
      * @throws Exception
      */
-    public function LogOut($sessionID){
-        $userDb = new Application_Model_User();
-        if($userDb->deleteSession($sessionID)){
-            return array('success'=>true);            
-        } else {
-            throw new Exception("Invalid Session ID", -32010);
-        }
+    public function LogOut($userName){
+        return array('success'=>true);            //faked
     }
    
     /**
@@ -138,6 +133,25 @@ class Application_Model_Server {
     public function GetExam($content){
         $examDb = new Application_Model_Exam();
         return $examDb->getExamination($content);            
+    }
+    
+    public function NewExam($userName, $subject, $EPWD, $timeLimit, $status, $firstQuestion){
+        $examDb = new Application_Model_Exam();
+        $questionDb = new Application_Model_Question();
+        $answerDb = new Application_Model_Answer();
+        $examID = $examDb->createExam($subject, $userName, $status, $EPWD, $timeLimit);
+                
+        $questions = Application_Model_Utility::convertJavaLinkedListToArray($firstQuestion, 'nextQuestion');        
+        foreach($questions as $question){
+            $answers = Application_Model_Utility::convertJavaLinkedListToArray($question['firstAnswer'], 'nextAnswer');        
+            $questionID = $questionDb->createQuestion($examID, $question['qText']);            
+            foreach($answers as $answer){
+                $answerDb->createAnswer($questionID, $answer['aText'], $answer['ifCorrect']);
+            }            
+        }
+        
+        return array('success'=>true); 
+        
     }
     
     /**
