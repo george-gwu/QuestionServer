@@ -140,17 +140,25 @@ class Application_Model_Server {
         return $examDb->getExamination($content);            
     }
     
+
     /**
      * 
-     * @param String $userName
-     * @param String $subject
-     * @param String $EPWD
-     * @param int $timeLimit
-     * @param int $status
-     * @param LinkedList $firstQuestion
+     * @param type $Examination
      * @return Success
      */
-    public function NewExam($userName, $subject, $EPWD, $timeLimit, $status, $firstQuestion){
+    public function NewExam($Examination){
+        // Due to a bug in the Java clients they have to double encode
+        // This is a hack fix to pull out the double encoding per the original protocol
+        $raw = Zend_Json::decode($Examination);       
+        
+        $userName = $raw['userName'];
+        $subject = $raw['subject'];
+        $EPWD = $raw['EPWD'];
+        $timeLimit = $raw['timeLimit'];
+        $status = $raw['status'];
+        $firstQuestion = $raw['firstQuestion'];
+        // End of hack fix
+        
         $examDb = new Application_Model_Exam();
         $questionDb = new Application_Model_Question();
         $answerDb = new Application_Model_Answer();
