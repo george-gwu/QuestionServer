@@ -46,11 +46,11 @@ class Application_Model_Server {
      * @param  string $user 
      * @param  string $password
      * @return string $sessionID Hex String of Session ID
-     * @return int    $role  Role Code (1-User/0-Admin)
+     * @return int    $role  Role Code (1-Teacher/2-Student)
      * 
      * curl -i -X POST -d '{ "jsonrpc": "2.0", "method": "LogIn",  "params": { "userName": "test",   "UPWD": "test"  }, "id": 1}' http://107.170.68.145/rpc.php
      */
-    public function LogIn($userName, $UPWD) {
+    public function LogIn($userName, $UPWD, $role) {
         
         $userDb = new Application_Model_User();
         $valid = $userDb->isUserPasswordValid($userName, $UPWD);
@@ -58,6 +58,11 @@ class Application_Model_Server {
         if($valid){             
             $sessionID = $userDb->createSession($userName);            
             $userData = $userDb->getUserDataFromSessionID($sessionID);
+            
+            if($role != $userData['role']){
+                $niceRole = ($userData['role']==1 ? 'Teacher' : 'Student');
+                throw new Exception("Wrong client! As a $niceRole, you need to use the $niceRole client.",-32022);
+            }
             
             return array('sessionID' => $sessionID, 'role' => $userData['role']);
             
