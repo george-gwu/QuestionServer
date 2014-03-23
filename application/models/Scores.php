@@ -56,7 +56,7 @@ class Application_Model_Scores extends Zend_Db_Table_Abstract {
         $select->join(array('e' => 'exam'), 's.examID = e.ID', array('e.title')); 
         
         if(!empty($user)){
-            $select->where('LOWER(s.user) = ?', (int)strtolower($user));        
+            $select->where('LOWER(s.user) = ?', strtolower($user));        
         }
         
         
