@@ -89,8 +89,10 @@ class Application_Model_User extends Zend_Db_Table_Abstract {
     public function deleteSession($sessionID){
         $cache = $this->getCache();
         
-        if($cache->test($sessionID)){
-            $cache->remove($sessionID);
+        $cacheID = 'session_' . $sessionID;
+        
+        if($cache->test($cacheID)){
+            $cache->remove($cacheID);
             return true;
         }
         return false;

@@ -74,12 +74,15 @@ class Application_Model_Server {
        
     /**
      * Log out a session
-     * @param String $sessionID
+     * @param String $content SessionID
      * @return Success/Exception
      * @throws Exception
      */
-    public function LogOut($userName){
-        return array('success'=>true);            //faked
+    public function LogOut($content){
+        $userDb = new Application_Model_User();
+        
+        $res = $userDb->deleteSession($content);
+        return array('success'=>$res);   
     }
    
     /**
