@@ -17,7 +17,7 @@ CREATE TABLE  `question`.`answers` (
   `text` varchar(255) NOT NULL,
   `isValid` tinyint(1) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `question`.`answers`
@@ -25,21 +25,6 @@ CREATE TABLE  `question`.`answers` (
 
 /*!40000 ALTER TABLE `answers` DISABLE KEYS */;
 LOCK TABLES `answers` WRITE;
-INSERT INTO `question`.`answers` VALUES  (1,1,'3',0),
- (2,1,'4',0),
- (3,1,'5',0),
- (4,1,'6',0),
- (5,1,'7',0),
- (6,2,'True',0),
- (7,2,'False',0),
- (16,6,'H2O',1),
- (17,6,'H2O2',0),
- (18,6,'HO',0),
- (19,7,'USA has 55 states',1),
- (20,7,'China is in Mid-East',0),
- (21,7,'Turkey crosses two conticents',1),
- (22,8,'Yes',1),
- (23,8,'No',0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `answers` ENABLE KEYS */;
 
@@ -57,7 +42,7 @@ CREATE TABLE  `question`.`exam` (
   `status` int(1) NOT NULL DEFAULT '0',
   `owner` varchar(255) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `question`.`exam`
@@ -65,11 +50,33 @@ CREATE TABLE  `question`.`exam` (
 
 /*!40000 ALTER TABLE `exam` DISABLE KEYS */;
 LOCK TABLES `exam` WRITE;
-INSERT INTO `question`.`exam` VALUES  (1,'Test Exam','',60,1,'test'),
- (2,'Other Test Exam','password',NULL,2,'test'),
- (4,'Test Exam','123',60,2,'test');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `exam` ENABLE KEYS */;
+
+
+--
+-- Definition of table `question`.`query`
+--
+
+DROP TABLE IF EXISTS `question`.`query`;
+CREATE TABLE  `question`.`query` (
+  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `command` text NOT NULL,
+  `ts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `ip` varchar(16) NOT NULL,
+  `useragent` varchar(255) NOT NULL,
+  `response` text NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `question`.`query`
+--
+
+/*!40000 ALTER TABLE `query` DISABLE KEYS */;
+LOCK TABLES `query` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `query` ENABLE KEYS */;
 
 
 --
@@ -83,7 +90,7 @@ CREATE TABLE  `question`.`questions` (
   `text` varchar(255) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `examindex` (`examID`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `question`.`questions`
@@ -91,11 +98,6 @@ CREATE TABLE  `question`.`questions` (
 
 /*!40000 ALTER TABLE `questions` DISABLE KEYS */;
 LOCK TABLES `questions` WRITE;
-INSERT INTO `question`.`questions` VALUES  (1,1,'What is 2+2?'),
- (2,1,'The sky is blue.'),
- (6,4,'What is water?'),
- (7,4,'Which is correct?'),
- (8,4,'Is acceleration of gravity 9.8 m/s^2?');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `questions` ENABLE KEYS */;
 
@@ -112,7 +114,7 @@ CREATE TABLE  `question`.`scores` (
   `score` int(3) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `userexam` (`user`,`examID`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `question`.`scores`
@@ -120,7 +122,6 @@ CREATE TABLE  `question`.`scores` (
 
 /*!40000 ALTER TABLE `scores` DISABLE KEYS */;
 LOCK TABLES `scores` WRITE;
-INSERT INTO `question`.`scores` VALUES  (1,'test',1,100);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `scores` ENABLE KEYS */;
 
